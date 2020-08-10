@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Pizza;
+namespace App\Http\Controllers\Api\Pizzas;
 
 use App\Http\Controllers\Controller;
 use App\Pizza;

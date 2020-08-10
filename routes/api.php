@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +17,4 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::prefix('pizzas')->group(function () {
-    Route::get('/index', 'Pizza\Index');
-});
+Route::get('/pizzas', 'Pizzas\Index');
