@@ -19,4 +19,12 @@ class Order extends Model
         self::ATTR_PHONE,
         self::ATTR_TOTAL_PRICE,
     ];
+
+    /**
+     * Get the items for the order.
+     */
+    public function items()
+    {
+        return $this->hasMany('App\OrderItem');
+    }
 }
