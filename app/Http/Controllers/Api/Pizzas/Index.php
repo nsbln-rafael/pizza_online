@@ -32,6 +32,6 @@ class Index extends Controller
 
         $pizzas = $query->get()->toArray();
 
-        return response()->json(['data' => $pizzas], 200);
+        return response()->json($pizzas, 200);
     }
 }

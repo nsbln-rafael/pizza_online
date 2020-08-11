@@ -3,7 +3,7 @@ import Vue from 'vue/dist/vue'
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 import {routes} from "./routes";
-import {store} from "./store/store";
+import store from "./store";
 
 Vue.config.productionTip = false;
 Vue.config.devtools = true;

@@ -7,9 +7,16 @@
 <script>
 
 export default {
-  name: 'App',
-  components: {},
-  methods: {}
+    name: 'App',
+    components: {},
+    methods: {
+        loadPizzas() {
+            this.$store.dispatch('pizzas/getAllItems');
+        }
+    },
+    created() {
+        this.loadPizzas();
+    }
 }
 </script>
 
