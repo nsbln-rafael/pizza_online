@@ -26,7 +26,7 @@ class PizzaSeeder extends Seeder
                         DB::table('pizzas')->insert([
                             Pizza::ATTR_NAME        => "Pizza №{$counter}",
                             Pizza::ATTR_DESCRIPTION => $factory->text(300),
-                            Pizza::ATTR_IMAGE       => $dir . $file,
+                            Pizza::ATTR_IMAGE       => 'images/' . $file,
                             Pizza::ATTR_PRICE       => $factory->randomFloat(2, 9, 20),
                         ]);
 

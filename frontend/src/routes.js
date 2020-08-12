@@ -1,17 +1,15 @@
-const User = {
-    template: '<h3>Home</h3>'
-};
+import Pizzas from "./components/Pizzas";
 
 export const routes = [
     {
         path: '/',
         name: 'main',
-        component: User
+        component: Pizzas
     },
     {
-        path: '/about',
-        name: 'about',
-        component: User
+        path: '/cart',
+        name: 'cart',
+        component: {template: '<p>Cart</p>'}
     }
 ];
 

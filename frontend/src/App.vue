@@ -1,14 +1,19 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+    <div id="app">
+        <Header></Header>
+        <b-container>
+            <router-view></router-view>
+        </b-container>
+    </div>
 </template>
 
 <script>
 
+import Header from "./components/Header";
+
 export default {
     name: 'App',
-    components: {},
+    components: {Header},
     methods: {
         loadPizzas() {
             this.$store.dispatch('pizzas/getAllItems');
