@@ -11,10 +11,10 @@
                     <p class="card-price">{{ pizza.price }} $</p>
                 </div>
                 <div class="col-md-4">
-                    <input type="number" v-model="quantity" min="0" class="form-control" style="border: none" placeholder="0">
+                    <input type="number" v-model="quantity" min="1" class="form-control" style="border: none">
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-outline-dark" @submit.prevent="addToCart()">Add</a>
+                    <a class="btn btn-outline-dark" @click="addToCart()">Add</a>
                 </div>
             </div>
         </div>
@@ -29,10 +29,18 @@
         },
         data() {
             return {
-                quantity: 0,
+                quantity: 1,
             }
         },
         methods: {
+            addToCart() {
+                let item = {
+                    pizza: this.pizza,
+                    quantity: parseInt(this.quantity)
+                };
+
+                this.$store.dispatch('cart/addItem', item);
+            }
         }
     }
 </script>

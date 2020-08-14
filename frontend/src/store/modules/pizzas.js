@@ -10,7 +10,7 @@ const getters = {};
 
 // actions
 const actions = {
-    async getAllItems ({ commit }) {
+    async setAll ({ commit }) {
         try {
             const response = await axios.get("http://localhost:8000/api/pizzas");
             commit("setAll", response.data);

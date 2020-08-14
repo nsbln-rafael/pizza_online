@@ -7,9 +7,9 @@ export const routes = [
         component: Pizzas
     },
     {
-        path: '/cart',
-        name: 'cart',
-        component: {template: '<p>Cart</p>'}
+        path: '/orders',
+        name: 'orders',
+        component: {template: '<p>My orders</p>'}
     }
 ];
 

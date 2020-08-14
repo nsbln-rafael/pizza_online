@@ -1,9 +1,12 @@
 <template>
     <div id="app">
+
         <Header></Header>
+
         <b-container>
             <router-view></router-view>
         </b-container>
+
     </div>
 </template>
 
@@ -16,11 +19,15 @@ export default {
     components: {Header},
     methods: {
         loadPizzas() {
-            this.$store.dispatch('pizzas/getAllItems');
+            this.$store.dispatch('pizzas/setAll');
+        },
+        loadCart() {
+            this.$store.dispatch('cart/setAll');
         }
     },
     created() {
         this.loadPizzas();
+        this.loadCart();
     }
 }
 </script>
