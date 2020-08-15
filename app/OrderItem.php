@@ -15,8 +15,16 @@ class OrderItem extends Model
     /**
      * Get the pizza for the order item.
      */
-    public function product()
+    public function pizza()
     {
-        return $this->belongsTo('App\OrderItem');
+        return $this->belongsTo('App\Pizza');
+    }
+
+    /**
+     * Get the pizza for the order item.
+     */
+    public function order()
+    {
+        return $this->belongsTo('App\Order');
     }
 }

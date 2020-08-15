@@ -18,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::get('/pizzas', 'Pizzas\Index');
+Route::post('/orders', 'Orders\Create');

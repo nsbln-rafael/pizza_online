@@ -12,6 +12,10 @@ class Order extends Model
     public const ATTR_PHONE       = 'phone';
     public const ATTR_TOTAL_PRICE = 'total_price';
 
+    public const ATTR_ITEMS       = 'items';
+
+    public const DELIVERY_PRICE    = 2;
+
     protected $fillable = [
         self::ATTR_NAME,
         self::ATTR_SURNAME,
@@ -26,5 +30,23 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany('App\OrderItem');
+    }
+
+    /**
+     * Get the items for the order.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * Get table name.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'orders';
     }
 }
