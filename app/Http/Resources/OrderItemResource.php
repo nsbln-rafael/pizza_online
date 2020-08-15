@@ -16,8 +16,9 @@ class OrderItemResource extends JsonResource
     public function toArray($request)
     {
         return [
+            OrderItem::ATTR_ID       => $this->id,
             OrderItem::ATTR_QUANTITY => $this->quantity,
-            OrderItem::ATTR_PIZZA => $this->pizza,
+            OrderItem::ATTR_PIZZA    => new OrderPizzaResource($this->pizza),
         ];
     }
 }

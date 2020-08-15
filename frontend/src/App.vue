@@ -23,11 +23,15 @@ export default {
         },
         loadCart() {
             this.$store.dispatch('cart/setAll');
+        },
+        loadUserOrders() {
+            this.$store.dispatch('user/setOrders');
         }
     },
     created() {
         this.loadPizzas();
         this.loadCart();
+        this.loadUserOrders();
     }
 }
 </script>

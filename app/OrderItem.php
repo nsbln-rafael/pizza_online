@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
+    public const ATTR_ID       =  'id';
     public const ATTR_QUANTITY = 'quantity';
     public const ATTR_PIZZA    = 'pizza';
 

@@ -1,5 +1,6 @@
 import Pizzas from "./components/Pizzas";
 import Cart from "./components/Cart";
+import UserOrders from "./components/UserOrders";
 
 export const routes = [
     {
@@ -10,7 +11,7 @@ export const routes = [
     {
         path: '/orders',
         name: 'orders',
-        component: {template: '<p>My orders</p>'}
+        component: UserOrders
     },
     {
         path: '/cart',

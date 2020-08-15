@@ -19,7 +19,7 @@ class Index extends Controller
      */
     public function __invoke(Request $request): JsonResponse
     {
-        $user  = Auth::user();
+        $user = Auth::user();
 
         if (null !== $user) {
             $result = OrderResource::collection($user->orders);

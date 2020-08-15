@@ -3,7 +3,7 @@
         <img :src="'http://127.0.0.1:8000/' + pizza.image" class="card-img-top" :alt="pizza.name">
         <div class="card-body">
             <h5 class="card-title text-center">{{ pizza.name}}</h5>
-            <p class="card-description text-center">{{ pizza.description.substr(0, 70) + '...'}}</p>
+            <p class="card-description text-center" :title="pizza.description">{{ pizza.description.substr(0, 70) + '...'}}</p>
         </div>
         <div class="card-bottom">
             <div class="row">
