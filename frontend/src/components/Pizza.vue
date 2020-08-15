@@ -22,27 +22,27 @@
 </template>
 
 <script>
-    export default {
-        name: "Pizza",
-        props: {
-            pizza: null
-        },
-        data() {
-            return {
-                quantity: 1,
-            }
-        },
-        methods: {
-            addToCart() {
-                let item = {
-                    pizza: this.pizza,
-                    quantity: parseInt(this.quantity)
-                };
+export default {
+    name: "Pizza",
+    props: {
+        pizza: null
+    },
+    data() {
+        return {
+            quantity: 1,
+        }
+    },
+    methods: {
+        addToCart() {
+            let item = {
+                pizza: this.pizza,
+                quantity: parseInt(this.quantity)
+            };
 
-                this.$store.dispatch('cart/addItem', item);
-            }
+            this.$store.dispatch('cart/addItem', item);
         }
     }
+}
 </script>
 
 <style scoped>

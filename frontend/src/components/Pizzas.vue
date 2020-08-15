@@ -22,7 +22,7 @@ export default {
         setTimeout(() => {
            this.pizzas = this.$store.state.pizzas.all;
            this.loaded = true;
-        }, 500);
+        }, 800);
     },
 }
 </script>

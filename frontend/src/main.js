@@ -20,6 +20,19 @@ const router = new VueRouter({
     routes: routes
 });
 
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresItems)) {
+        if ((store.state.cart.all.length === 0) && store.getters['cart/isEmpty']) {
+            next({name: 'main',});
+            store.dispatch('cart/emptyError');
+        } else {
+            next()
+        }
+    } else {
+        next() // make sure to always call next()!
+    }
+});
+
 new Vue({
     el: '#app',
     router: router,

@@ -1,5 +1,7 @@
 // initial state
 
+// import axios from "axios";
+
 const state = () => ({
     all: [],
     sum: 0,
@@ -9,6 +11,15 @@ const state = () => ({
 
 // getters
 const getters = {
+    isEmpty: () => {
+        let cartInfo = JSON.parse(localStorage.getItem('cartInfo'));
+
+        if (cartInfo !== null) {
+            return (cartInfo.all.length === 0);
+        }
+
+        return true;
+    },
 };
 
 // actions
@@ -27,6 +38,12 @@ const actions = {
         }
     },
 
+    changeItemQuantity ({commit}, params) {
+        commit("changeItemQuantity", params);
+        commit("calculateTotalSum");
+        commit("calculateTotalQuantity");
+    },
+
     removeItem ({commit}, pizzaId) {
         commit("removeItem", pizzaId);
         commit("calculateTotalSum");
@@ -37,7 +54,26 @@ const actions = {
         commit("removeAll");
         commit("calculateTotalSum");
         commit("calculateTotalQuantity");
-    }
+    },
+
+    emptyError () {
+        alert('Cart is empty!');
+    },
+
+    // createOrder ({commit}) {
+    //     return new Promise((resolve, reject) => {
+    //         axios.post("http://localhost:8000/api/orders").then((response) => {
+    //             commit("removeAll");
+    //             commit("calculateTotalSum");
+    //             commit("calculateTotalQuantity");
+    //             response();
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //             reject();
+    //         });
+    //     });
+    // }
 };
 
 // mutations
@@ -65,6 +101,20 @@ const mutations = {
         localStorage.setItem('cartInfo', JSON.stringify(state));
     },
 
+    changeItemQuantity (state, params) {
+        if (params.quantity <= 0) {
+            return;
+        }
+
+        for (let key in state.all) {
+            if (state.all[key].pizza.id === params.pizzaId) {
+                state.all[key].quantity = params.quantity;
+            }
+        }
+
+        localStorage.setItem('cartInfo', JSON.stringify(state));
+    },
+
     removeItem (state, pizzaId) {
         for (let key in state.all) {
             if (state.all[key].pizza.id === pizzaId) {
@@ -72,13 +122,17 @@ const mutations = {
             }
         }
 
-        localStorage.setItem('cartInfo', JSON.stringify(state));
+        if (state.all.length === 0) {
+            localStorage.removeItem('cartInfo');
+        } else {
+            localStorage.setItem('cartInfo', JSON.stringify(state));
+        }
     },
 
     removeAll (state) {
         state.all = [];
 
-        localStorage.setItem('cartInfo', JSON.stringify(state));
+        localStorage.removeItem('cartInfo');
     },
 
     calculateTotalSum: (state) => {
