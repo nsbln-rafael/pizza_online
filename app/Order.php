@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    public const ATTR_ID          = 'id';
     public const ATTR_NAME        = 'name';
     public const ATTR_SURNAME     = 'surname';
     public const ATTR_ADDRESS     = 'address';
@@ -30,6 +31,14 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany('App\OrderItem');
+    }
+
+    /**
+     * Get the pizzas for the order.
+     */
+    public function pizzas()
+    {
+        return $this->belongsToMany('App\Pizza', OrderItem::tableName());
     }
 
     /**

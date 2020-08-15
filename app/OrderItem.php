@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderItem extends Model
 {
     public const ATTR_QUANTITY = 'quantity';
+    public const ATTR_PIZZA    = 'pizza';
 
     protected $fillable = [
         self::ATTR_QUANTITY,
@@ -26,5 +27,15 @@ class OrderItem extends Model
     public function order()
     {
         return $this->belongsTo('App\Order');
+    }
+
+    /**
+     * Get table name.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'order_items';
     }
 }
