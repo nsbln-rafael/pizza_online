@@ -53,21 +53,22 @@
         <div>
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Enter name">
+                <input v-model="contactInfo.name" type="text" class="form-control" id="name" placeholder="Enter name">
             </div>
             <div class="form-group">
                 <label for="surname">Surname</label>
-                <input type="text" class="form-control" id="surname" placeholder="Enter surname">
+                <input v-model="contactInfo.surname" type="text" class="form-control" id="surname" placeholder="Enter surname">
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="Enter address">
+                <input v-model="contactInfo.address" type="text" class="form-control" id="address" placeholder="Enter address">
             </div>
             <div class="form-group">
                 <label for="phone number">Phone number</label>
-                <input type="text" class="form-control" id="phone number" placeholder="Enter phone number">
+                <input v-model="contactInfo.phone" type="tel" pattern="[0-9]*" class="form-control" id="phone number" placeholder="Enter phone number">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-success mr-2" @click="createOrder">Submit</button>
+            <button type="submit" class="btn btn-primary" @click="goBack">Back</button>
         </div>
     </div>
 </template>
@@ -84,6 +85,12 @@
                 delivery: 0,
                 quantity: 0,
                 sum: 0,
+                contactInfo: {
+                    name: '',
+                    surname: '',
+                    address: '',
+                    phone: '',
+                },
             }
         },
         mounted() {
@@ -118,6 +125,30 @@
 
                 this.$router.push({name: 'main'});
             },
+
+            createOrder () {
+                let params = {
+                    name: this.contactInfo.name,
+                    surname: this.contactInfo.surname,
+                    address: this.contactInfo.address,
+                    phone: this.contactInfo.phone,
+                    items: this.items
+                };
+
+                this.$store.dispatch('cart/createOrder', params)
+                    .then((message) => {
+                        alert(message);
+                        this.$router.push({name: 'main'});
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    });
+            },
+
+            goBack () {
+                this.$router.push({name: 'main'});
+            },
+
         },
         beforeDestroy() {
             this.unwatch();

@@ -1,6 +1,6 @@
 // initial state
 
-// import axios from "axios";
+import axios from "axios";
 
 const state = () => ({
     all: [],
@@ -60,20 +60,30 @@ const actions = {
         alert('Cart is empty!');
     },
 
-    // createOrder ({commit}) {
-    //     return new Promise((resolve, reject) => {
-    //         axios.post("http://localhost:8000/api/orders").then((response) => {
-    //             commit("removeAll");
-    //             commit("calculateTotalSum");
-    //             commit("calculateTotalQuantity");
-    //             response();
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //             reject();
-    //         });
-    //     });
-    // }
+    createOrder ({commit}, params) {
+        return new Promise(((resolve, reject) => {
+            axios.post("http://localhost:8000/api/orders", params)
+                .then(() => {
+                    let successMessage = 'Order successfully created!';
+
+                    commit("removeAll");
+                    commit("calculateTotalSum");
+                    commit("calculateTotalQuantity");
+
+                    resolve(successMessage);
+                }).catch((error) => {
+                    let errorMessage = '';
+                    let data = error.response.data ? JSON.parse(error.response.data) : [];
+
+                    Object.values(data).forEach(value => {
+                        errorMessage += value[0] + '\n';
+                    });
+
+                    reject(errorMessage);
+            });
+        }));
+
+    }
 };
 
 // mutations
