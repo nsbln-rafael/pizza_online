@@ -1,4 +1,5 @@
 import axios from "axios";
+import {BACKEND_URL, ENDPOINT_API, ENDPOINT_CURRENCIES} from "../../config/config";
 
 // initial state
 const state = () => ({
@@ -13,7 +14,7 @@ const getters = {};
 const actions = {
     async setAll ({ commit }) {
         try {
-            const response = await axios.get("http://localhost:8000/api/currencies");
+            const response = await axios.get(BACKEND_URL + ENDPOINT_API + ENDPOINT_CURRENCIES);
             commit("setAll", response.data);
             commit("setCurrent");
         } catch(error) {

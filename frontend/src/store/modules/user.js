@@ -1,6 +1,7 @@
 // initial state
 
 import axios from "axios";
+import {BACKEND_URL, ENDPOINT_API, ENDPOINT_ORDERS} from "../../config/config";
 
 const state = () => ({
     orders: [],
@@ -14,7 +15,7 @@ const getters = {
 const actions = {
     async setOrders ({ commit }) {
         try {
-            const response = await axios.get("http://localhost:8000/api/orders");
+            const response = await axios.get(BACKEND_URL + ENDPOINT_API + ENDPOINT_ORDERS);
             commit("setOrders", response.data);
         } catch(error) {
             console.error("error", error);

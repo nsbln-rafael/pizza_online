@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img :src="'http://127.0.0.1:8000/' + pizza.image" class="card-img-top" :alt="pizza.name">
+        <img :src="url + '/' + pizza.image" class="card-img-top" :alt="pizza.name">
         <div class="card-body">
             <h5 class="card-title text-center">{{ pizza.name}}</h5>
             <p class="card-description text-center" :title="pizza.description">{{ pizza.description.substr(0, 70) + '...'}}</p>
@@ -22,15 +22,18 @@
 </template>
 
 <script>
+import {BACKEND_URL} from "../config/config";
+
 export default {
     name: "Pizza",
     props: {
-        pizza: null
+        pizza: null,
     },
     data() {
         return {
             quantity: 1,
-            currency: {}
+            currency: {},
+            url: BACKEND_URL
         }
     },
     methods: {

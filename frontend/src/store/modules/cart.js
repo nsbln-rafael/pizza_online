@@ -1,6 +1,7 @@
 // initial state
 
 import axios from "axios";
+import {BACKEND_URL, ENDPOINT_API, ENDPOINT_ORDERS} from "../../config/config";
 
 const state = () => ({
     all: [],
@@ -62,7 +63,7 @@ const actions = {
 
     createOrder ({commit}, params) {
         return new Promise(((resolve, reject) => {
-            axios.post("http://localhost:8000/api/orders", params)
+            axios.post(BACKEND_URL + ENDPOINT_API + ENDPOINT_ORDERS, params)
                 .then(() => {
                     let successMessage = 'Order successfully created!';
 
