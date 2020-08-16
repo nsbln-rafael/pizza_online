@@ -18,10 +18,10 @@
                     <th scope="row">{{ order.id }}</th>
                     <td>
                         <p v-for="item in order.items" :key="item.id">
-                            <b style="color: red">{{item.pizza.name}}</b> / {{item.quantity}} / {{item.pizza.price}} $
+                            <b style="color: red">{{item.pizza.name}}</b> / {{item.quantity}} / {{ (currency.rate * item.pizza.price).toFixed(2) }} {{ currency.sign }}
                         </p>
                     </td>
-                    <td>{{ order.total_price }} $</td>
+                    <td>{{ (currency.rate * order.total_price).toFixed(2) }} {{ currency.sign }}</td>
                 </tr>
             </tbody>
         </table>
@@ -42,19 +42,32 @@ export default {
         return {
             orders: [],
             loaded: false,
+            currency: {},
         }
     },
     mounted() {
+        this.currency = this.$store.state.currencies.current;
+
         setTimeout(() => {
             this.orders = this.$store.state.user.orders;
             this.loaded = true;
         }, 800);
+
+        this.unwatchCurrency = this.$store.watch(
+            (state) => {return state.currencies.current},
+            (current) => {this.currency = current},
+            {deep:true}
+        );
     },
 
     methods: {
         goBack () {
             this.$router.push({name: 'main'});
        },
+    },
+
+    beforeDestroy() {
+        this.unwatchCurrency();
     }
 }
 </script>

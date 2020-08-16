@@ -28,7 +28,8 @@
                     <th scope="row">{{ item.pizza.name }}</th>
                     <cart-item-quantity :item="item"></cart-item-quantity>
                     <td>х</td>
-                    <td>{{ item.pizza.price }} $</td>
+                    <td>
+                        {{ (item.pizza.price * currency.rate).toFixed(2) }} {{ currency.sign }}</td>
                     <td>
                         <button type="button" @click="removeItem(item.pizza.id)" class="btn btn-outline-danger">
                             <b-icon-trash></b-icon-trash>
@@ -38,13 +39,13 @@
                 <tr class="text-center">
                     <th>Delivery:</th>
                     <td colspan="2"></td>
-                    <td>{{ delivery }} $</td>
+                    <td>{{ (delivery * currency.rate).toFixed(2) }} {{ currency.sign }}</td>
                     <td></td>
                 </tr>
                 <tr class="text-center bg-primary">
                     <th>Total:</th>
                     <td colspan="2"></td>
-                    <td>{{ sum.toFixed(2) }} $</td>
+                    <td>{{ (sum * currency.rate).toFixed(2) }} {{ currency.sign }}</td>
                     <td></td>
                 </tr>
             </tbody>
@@ -91,16 +92,24 @@
                     address: '',
                     phone: '',
                 },
+                currency: {},
             }
         },
         mounted() {
             let cart = this.$store.state.cart;
+            this.currency = this.$store.state.currencies.current;
 
             this.loadCart(cart);
 
             this.unwatch = this.$store.watch(
                 (state) => {return state.cart;},
                 (cart) => {this.loadCart(cart);},
+                {deep:true}
+            );
+
+            this.unwatchCurrency = this.$store.watch(
+                (state) => {return state.currencies.current},
+                (current) => {this.currency = current},
                 {deep:true}
             );
         },
@@ -152,6 +161,7 @@
         },
         beforeDestroy() {
             this.unwatch();
+            this.unwatchCurrency();
         }
     }
 </script>

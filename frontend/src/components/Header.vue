@@ -15,7 +15,7 @@
                         <button type="button" @click="redirectToCart()" title="My cart" class="btn btn-light">
                             <b-icon-cart></b-icon-cart>
                             <b-badge variant="dark">{{ cartQuantity }}</b-badge> |
-                            <b-badge variant="dark">{{ cartSum.toFixed(2) }}$</b-badge>
+                            <b-badge variant="dark">{{ (cartSum * currency.rate).toFixed(2) }} {{ currency.sign }}</b-badge>
                         </button>
                     </b-navbar-nav>
                 </b-collapse>
@@ -36,17 +36,25 @@ export default {
             cartDelivery: 0,
             cartQuantity: 0,
             cartOpened: false,
+            currency: {},
         }
     },
 
     mounted() {
         let cart = this.$store.state.cart;
+        this.currency = this.$store.state.currencies.current;
 
         this.loadCart(cart);
 
         this.unwatch = this.$store.watch(
             (state) => {return state.cart;},
             (cart) => {this.loadCart(cart);},
+            {deep:true}
+        );
+
+        this.unwatchCurrency = this.$store.watch(
+            (state) => {return state.currencies.current},
+            (current) => {this.currency = current},
             {deep:true}
         );
     },
@@ -64,6 +72,7 @@ export default {
     },
     beforeDestroy() {
         this.unwatch();
+        this.unwatchCurrency();
     }
 }
 </script>

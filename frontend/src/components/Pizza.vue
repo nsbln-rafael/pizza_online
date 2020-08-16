@@ -8,7 +8,7 @@
         <div class="card-bottom">
             <div class="row">
                 <div class="col-md-4">
-                    <p class="card-price">{{ pizza.price }} $</p>
+                    <p class="card-price">{{ (pizza.price * this.currency.rate).toFixed(2)}} {{this.currency.sign}}</p>
                 </div>
                 <div class="col-md-4">
                     <input type="number" v-model="quantity" min="1" class="form-control" style="border: none">
@@ -30,6 +30,7 @@ export default {
     data() {
         return {
             quantity: 1,
+            currency: {}
         }
     },
     methods: {
@@ -41,6 +42,18 @@ export default {
 
             this.$store.dispatch('cart/addItem', item);
         }
+    },
+    mounted() {
+        this.currency = this.$store.state.currencies.current;
+
+        this.unwatch = this.$store.watch(
+            (state) => {return state.currencies.current},
+            (current) => {this.currency = current},
+            {deep:true}
+        );
+    },
+    beforeDestroy() {
+        this.unwatch();
     }
 }
 </script>
