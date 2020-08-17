@@ -1,5 +1,8 @@
 <template>
     <b-row mt="2" v-if="loaded">
+        <div class="row">
+            <currencies></currencies>
+        </div>
         <div class="col-md-3 mt-4" v-for="pizza in pizzas" :key="pizza.id">
             <pizza :pizza="pizza">
             </pizza>
@@ -9,9 +12,10 @@
 
 <script>
 import Pizza from "./Pizza";
+import Currencies from "./Currencies";
 export default {
   name: 'Pizzas',
-    components: {Pizza},
+    components: {Pizza,Currencies},
     data() {
         return {
             pizzas: [],

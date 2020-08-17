@@ -25,7 +25,7 @@ class Create extends Controller
         $validator = Validator::make($request->all(), [
             Order::ATTR_NAME        => 'required|max:255',
             Order::ATTR_SURNAME     => 'required|max:255',
-            Order::ATTR_PHONE       => 'required|max:255',
+            Order::ATTR_PHONE       => 'required|numeric',
             Order::ATTR_ADDRESS     => 'required|max:255',
             Order::ATTR_ITEMS       => 'required|min:1',
         ]);
@@ -39,7 +39,7 @@ class Create extends Controller
         $items = $request->get('items');
 
         if (null !== $user) {
-            $order->user->associate($user);
+            $order->user()->associate($user);
         }
 
         foreach ($items as $item) {

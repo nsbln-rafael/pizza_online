@@ -26,17 +26,15 @@ class Login extends Controller
                     'grant_type' => 'password',
                     'client_id' => config('services.passport.client_id'),
                     'client_secret' => config('services.passport.client_secret'),
-                    'username' => $request->username,
-                    'password' => $request->password,
+                    'username' => $request->get('username'),
+                    'password' => $request->get('password'),
                 ],
             ]);
 
             return response()->json($response->getBody()->getContents(), 200);
         } catch (BadResponseException $exception) {
-            if ($exception->getCode() === 400) {
-                return response()->json('Please enter username or password!', $exception->getCode());
-            } elseif ($exception->getCode() === 401) {
-                return response()->json('Invalid credentials! Please again.', $exception->getCode());
+            if ($exception->getCode() === 400 || $exception->getCode() === 401) {
+                return response()->json('Invalid credentials! Please try again.', $exception->getCode());
             }
 
             return response()->json('Something went wrong!', $exception->getCode());

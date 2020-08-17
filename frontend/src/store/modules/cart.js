@@ -63,7 +63,12 @@ const actions = {
 
     createOrder ({commit}, params) {
         return new Promise(((resolve, reject) => {
-            axios.post(BACKEND_URL + ENDPOINT_API + ENDPOINT_ORDERS, params)
+            let token = params.token;
+            delete params.token;
+
+            axios.post(BACKEND_URL + ENDPOINT_API + ENDPOINT_ORDERS, params, {
+                headers: {Authorization: 'Bearer ' + token}
+            })
                 .then(() => {
                     let successMessage = 'Order successfully created!';
 

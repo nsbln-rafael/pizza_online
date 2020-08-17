@@ -1,27 +1,36 @@
 <template>
     <div>
-        <b-navbar toggleable="lg" type="dark" variant="dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
 
                 <router-link :to="{name: 'main'}" title="Menu">
                     <b-navbar-brand>PIZZA ONLINE</b-navbar-brand>
                 </router-link>
 
-                <b-collapse id="nav-collapse" is-nav>
+                <div class="collapse navbar-collapse" id="navbarNav">
                     <b-navbar-nav class="ml-auto">
-                        <router-link :to="{name: 'orders'}" title="My orders" class="btn btn-light">
+                        <router-link v-if="!loggedIn" :to="{name: 'login'}" class="btn" style="color: white">
+                            Login
+                        </router-link>
+                        <router-link v-if="!loggedIn" :to="{name: 'register'}" class="btn" style="color: white">
+                            Register
+                        </router-link>
+                        <router-link v-if="loggedIn" :to="{name: 'logout'}" class="btn" style="color: white">
+                            Logout
+                        </router-link>
+                        <router-link v-if="loggedIn" :to="{name: 'orders'}" title="My orders" class="btn btn-light">
                           <b-icon-list-check></b-icon-list-check>
-                        </router-link> |
+                        </router-link>
                         <button type="button" @click="redirectToCart()" title="My cart" class="btn btn-light">
                             <b-icon-cart></b-icon-cart>
                             <b-badge variant="dark">{{ cartQuantity }}</b-badge> |
                             <b-badge variant="dark">{{ (cartSum * currency.rate).toFixed(2) }} {{ currency.sign }}</b-badge>
                         </button>
                     </b-navbar-nav>
-                </b-collapse>
+                </div>
 
             </div>
-        </b-navbar>
+        </nav>
     </div>
 </template>
 
@@ -37,12 +46,14 @@ export default {
             cartQuantity: 0,
             cartOpened: false,
             currency: {},
+            loggedIn: false,
         }
     },
 
     mounted() {
         let cart = this.$store.state.cart;
         this.currency = this.$store.state.currencies.current;
+        this.loggedIn = (this.$store.state.user.token !== null);
 
         this.loadCart(cart);
 
@@ -55,6 +66,12 @@ export default {
         this.unwatchCurrency = this.$store.watch(
             (state) => {return state.currencies.current},
             (current) => {this.currency = current},
+            {deep:true}
+        );
+
+        this.unwatchUser = this.$store.watch(
+            (state) => {return state.user.token},
+            (token) => {this.loggedIn = (token !== null)},
             {deep:true}
         );
     },
@@ -73,6 +90,7 @@ export default {
     beforeDestroy() {
         this.unwatch();
         this.unwatchCurrency();
+        this.unwatchUser();
     }
 }
 </script>

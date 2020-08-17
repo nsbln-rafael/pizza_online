@@ -30,9 +30,9 @@ class Register extends Controller
         }
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $validator->validated()['name'],
+            'email' => $validator->validated()['email'],
+            'password' => Hash::make($validator->validated()['password']),
         ]);
 
         return response()->json($user, 200);

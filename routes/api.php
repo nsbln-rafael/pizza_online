@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::get('/pizzas', 'Pizzas\Index');
-Route::get('/orders', 'Orders\Index');
-Route::post('/orders', 'Orders\Create');
 Route::get('/currencies', 'Currencies\Index');
 Route::post('/login', 'Auth\Login');
 Route::post('/register', 'Auth\Register');
+Route::post('/orders', 'Orders\Create');
+Route::middleware('auth:api')->get('/orders', 'Orders\Index');
 Route::middleware('auth:api')->post('/logout', 'Auth\Logout');

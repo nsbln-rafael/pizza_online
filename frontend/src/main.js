@@ -1,5 +1,5 @@
 import App from "./App";
-import Vue from 'vue/dist/vue'
+import Vue from 'vue/dist/vue.esm';
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 import {routes} from "./routes";
@@ -23,8 +23,20 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresItems)) {
         if ((store.state.cart.all.length === 0) && store.getters['cart/isEmpty']) {
-            next({name: 'main',});
+            next({name: 'main'});
             store.dispatch('cart/emptyError');
+        } else {
+            next()
+        }
+    } else if (to.matched.some(record => record.meta.requiresAnonymous)) {
+        if (store.getters['user/loggedIn']) {
+            next({name: 'main'});
+        } else {
+            next()
+        }
+    }else if (to.matched.some(record => record.meta.requiresLoggedIn)) {
+        if (!store.getters['user/loggedIn']) {
+            next({name: 'main'});
         } else {
             next()
         }

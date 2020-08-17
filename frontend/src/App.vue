@@ -2,7 +2,6 @@
     <div id="app">
         <Header></Header>
         <b-container>
-            <currencies></currencies>
             <router-view></router-view>
         </b-container>
     </div>
@@ -11,11 +10,10 @@
 <script>
 
 import Header from "./components/Header";
-import Currencies from "./components/Currencies";
 
 export default {
     name: 'App',
-    components: {Currencies, Header},
+    components: {Header},
     methods: {
         loadCurrencies() {
             this.$store.dispatch('currencies/setAll');

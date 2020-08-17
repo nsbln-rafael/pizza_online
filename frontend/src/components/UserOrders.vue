@@ -1,5 +1,8 @@
 <template>
     <div class="mt-4">
+        <div class="row">
+            <currencies></currencies>
+        </div>
         <div class="row mb-3">
             <div class="col-md-2">
                 <h5>My orders</h5>
@@ -36,8 +39,10 @@
 </template>
 
 <script>
+import Currencies from "./Currencies";
 export default {
     name: "UserOrders",
+    components: {Currencies},
     data() {
         return {
             orders: [],

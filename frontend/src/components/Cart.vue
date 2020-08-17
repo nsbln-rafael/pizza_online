@@ -1,5 +1,8 @@
 <template>
     <div class="order mt-4">
+        <div class="row">
+            <currencies></currencies>
+        </div>
         <div class="row mb-3">
             <div class="col-md-2">
                 <h5>Order info:</h5>
@@ -77,9 +80,10 @@
 <script>
 
     import CartItemQuantity from "./CartItemQuantity";
+    import Currencies from "./Currencies";
     export default {
         name: 'Cart',
-        components: {CartItemQuantity},
+        components: {Currencies, CartItemQuantity},
         data() {
             return {
                 items: [],
@@ -93,11 +97,13 @@
                     phone: '',
                 },
                 currency: {},
+                token: null,
             }
         },
         mounted() {
             let cart = this.$store.state.cart;
             this.currency = this.$store.state.currencies.current;
+            this.token = this.$store.state.user.token;
 
             this.loadCart(cart);
 
@@ -141,13 +147,20 @@
                     surname: this.contactInfo.surname,
                     address: this.contactInfo.address,
                     phone: this.contactInfo.phone,
-                    items: this.items
+                    items: this.items,
+                    token: this.token,
                 };
 
                 this.$store.dispatch('cart/createOrder', params)
                     .then((message) => {
                         alert(message);
-                        this.$router.push({name: 'main'});
+
+                        if (this.token) {
+                            this.$store.dispatch('user/setOrders');
+                            this.$router.push({name: 'orders'});
+                        } else {
+                            this.$router.push({name: 'main'});
+                        }
                     })
                     .catch((error) => {
                         alert(error);
