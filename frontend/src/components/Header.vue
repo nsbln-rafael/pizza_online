@@ -18,8 +18,8 @@
                         <router-link v-if="loggedIn" :to="{name: 'logout'}" class="btn" style="color: white">
                             Logout
                         </router-link>
-                        <router-link v-if="loggedIn" :to="{name: 'orders'}" title="My orders" class="btn btn-light">
-                          <b-icon-list-check></b-icon-list-check>
+                        <router-link v-if="loggedIn" :to="{name: 'orders'}" title="My orders" class="btn ">
+                          <b-icon-list-check style="color: white"></b-icon-list-check>
                         </router-link>
                         <button type="button" @click="redirectToCart()" title="My cart" class="btn btn-light">
                             <b-icon-cart></b-icon-cart>
